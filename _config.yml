@@ -1,0 +1,59 @@
+# Site settings
+title: Mweetwa Mweembo Nketani
+description: Sales Engineer at Bravo Technology (Z) Ltd. Enterprise solutions architect specializing in cloud architecture, API ecosystems, and digital transformation.
+baseurl: ""
+url: "https://mweetwa-nketani.com"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# SEO
+author: Mweetwa Mweembo Nketani
+email: mweetwanketani@gmail.com
+phone: "+260777971630"
+linkedin: "https://www.linkedin.com/in/mweetwa-mweembo-nketani-150b17197/"
+github: "https://github.com/N3gus"
+
+# Social
+twitter:
+  username: mweetwa_nketani
+  card: summary
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md
+  - LICENSE
+
+# Sass configuration
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# Collections
+collections:
+  - skills
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "skills"
+    values:
+      layout: "skill"
