@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ site.description }}">
+    <meta name="keywords" content="Sales Engineer, Enterprise Solutions, Cloud Architecture, API Integration, Digital Transformation, Bravo Technology Zambia">
+    <meta name="author" content="{{ site.author }}">
+    <meta property="og:title" content="{{ page.title | default: site.title }}">
+    <meta property="og:description" content="{{ page.description | default: site.description }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ page.title | default: site.title }}">
+    <meta name="twitter:description" content="{{ page.description | default: site.description }}">
+    <!-- Accessibility Meta Tags -->
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="color-scheme" content="light dark">
+    <meta name="msapplication-TileColor" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>{{ page.title | default: site.title }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "{{ site.author }}",
+        "jobTitle": "Sales Engineer",
+        "worksFor": {
+            "@type": "Organization",
+            "name": "Bravo Technology (Z) Ltd"
+        },
+        "description": "{{ site.description }}",
+        "url": "{{ site.url }}",
+        "sameAs": [
+            "{{ site.linkedin }}",
+            "{{ site.github }}"
+        ],
+        "email": "{{ site.email }}",
+        "telephone": "{{ site.phone }}"
+    }
+    </script>
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    <script>
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.querySelector('.nav-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            const navLinksItems = document.querySelectorAll('.nav-link');
+            
+            if (navToggle && navLinks) {
+                navToggle.addEventListener('click', function() {
+                    const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+                    navLinks.style.display = isExpanded ? 'none' : 'flex';
+                    navToggle.setAttribute('aria-expanded', !isExpanded);
+                });
+                
+                // Close mobile menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!navToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                        navLinks.style.display = 'none';
+                        navToggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+            
+            // Active navigation highlighting
+            const sections = document.querySelectorAll('section[id]');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.3
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const id = entry.target.getAttribute('id');
+                    const correspondingLink = document.querySelector(`[href="#${id}"]`);
+                    
+                    if (correspondingLink && entry.isIntersecting) {
+                        navLinksItems.forEach(link => link.classList.remove('active'));
+                        correspondingLink.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+            
+            sections.forEach(section => observer.observe(section));
+            
+            // Smooth scroll behavior
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    {% include navigation.html %}
+    
+    <header class="hero" role="banner">
+        <div class="hero-content">
+            <div class="hero-profile">
+                <div class="profile-image-container">
+                    <img src="https://media.licdn.com/dms/image/v2/D4D03AQEvso79-ALgeg/profile-displayphoto-crop_800_800/B4DZmg0JdcJYAI-/0/1759339660012?e=1776902400&v=beta&t=eJ7r4Tv4Rk0E078Udtwwomtv9p9ptnFlejPAbrYOv0c" 
+                         alt="Mweetwa Mweembo Nketani - Sales Engineer" 
+                         class="profile-image">
+                </div>
+                <div class="hero-text">
+                    <h1>{{ site.author }}</h1>
+                    <p class="subtitle">Sales Engineer | Enterprise Solutions Architect</p>
+                    <p class="company">Representing <strong><a href="https://www.bravotechafrica.com" target="_blank" rel="noopener">Bravo Technology (Z) Ltd</a></strong> | Leading Digital Transformation in Africa</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" role="main">
+        <section aria-labelledby="about-heading">
+            {{ content }}
+        </section>
+    </main>
+
+    {% include footer.html %}
+</body>
+</html>
