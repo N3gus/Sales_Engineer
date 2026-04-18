@@ -4,8 +4,8 @@ title: Mweetwa Mweembo Nketani
 description: Sales Engineer at Bravo Technology (Z) Ltd. Enterprise solutions architect specializing in cloud architecture, API ecosystems, and digital transformation.
 ---
 
-<section id="about">
-    <h2 class="section-title">About</h2>
+<section id="about" aria-labelledby="about-heading">
+    <h2 id="about-heading" class="section-title">About</h2>
     <div class="about-content">
         <p>
             As a Sales Engineer at BravoTech, I architect and deliver cutting-edge enterprise solutions 

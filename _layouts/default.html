@@ -13,6 +13,12 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="{{ page.title | default: site.title }}">
     <meta name="twitter:description" content="{{ page.description | default: site.description }}">
+    <!-- Accessibility Meta Tags -->
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="color-scheme" content="light dark">
+    <meta name="msapplication-TileColor" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>{{ page.title | default: site.title }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,13 +44,74 @@
     }
     </script>
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+    <script>
+        // Navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.querySelector('.nav-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            const navLinksItems = document.querySelectorAll('.nav-link');
+            
+            if (navToggle && navLinks) {
+                navToggle.addEventListener('click', function() {
+                    const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+                    navLinks.style.display = isExpanded ? 'none' : 'flex';
+                    navToggle.setAttribute('aria-expanded', !isExpanded);
+                });
+                
+                // Close mobile menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!navToggle.contains(e.target) && !navLinks.contains(e.target)) {
+                        navLinks.style.display = 'none';
+                        navToggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+            
+            // Active navigation highlighting
+            const sections = document.querySelectorAll('section[id]');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.3
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const id = entry.target.getAttribute('id');
+                    const correspondingLink = document.querySelector(`[href="#${id}"]`);
+                    
+                    if (correspondingLink && entry.isIntersecting) {
+                        navLinksItems.forEach(link => link.classList.remove('active'));
+                        correspondingLink.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+            
+            sections.forEach(section => observer.observe(section));
+            
+            // Smooth scroll behavior
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
     
     {% include navigation.html %}
     
-    <header class="hero" role="banner">
+    <header class="hero-modern" role="banner">
         <div class="hero-content">
             <div class="hero-profile">
                 <div class="profile-image-container">
@@ -62,7 +129,9 @@
     </header>
 
     <main id="main-content" role="main">
-        {{ content }}
+        <section aria-labelledby="about-heading">
+            {{ content }}
+        </section>
     </main>
 
     {% include footer.html %}
