@@ -49,6 +49,9 @@
     --glass-border: rgba(255, 255, 255, 0.2);
     --glass-blur: blur(10px) saturate(180%);
     
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%);
+    
     /* Font Stack */
     --font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
